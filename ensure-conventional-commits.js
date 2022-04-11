@@ -11,7 +11,7 @@ logger.logTitle("ENSURING CONVENTIONAL COMMITS");
 
 const baseBranch = process.argv[2];
 const prBranch = process.argv[3];
-const customCCFilePath = process.argv[4] ?? 'not provided';
+const customCCFilePath = process.argv[4] || 'not provided';
 const defaultCCFilePath = process.env.DEFAULT_CC
 const defaultCCTypes = getDefaultConventionalCommits(defaultCCFilePath)
 
@@ -39,9 +39,7 @@ let ok = git
   .every((commit) => {
     logger.logAction("EVALUATING COMMIT");
     let commitTypes = useCustomCC ? customCCTypes : defaultCCTypes
-    let commitMessageOk = commitTypes.some((prefix) =>
-      commit.subject.startsWith(`${prefix}:`)
-    );
+    let commitMessageOk = validateCommitFormat(commit.subject, commitTypes)
     let result = {
       message: commitMessageOk ? "OK" : "WRONG",
       documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
@@ -58,8 +56,13 @@ let ok = git
       author: commit.author
     };
 
-    commitMessageOk ? logger.logSucceed(`valid commit`) : logger.logError("invalid commit");
-    logger.logKeyValuePair("result", result);
+    if (commitMessageOk) {
+      logger.logSucceed(`commit is valid`);
+    } else {
+      logger.logError("commit is invalid")
+      logger.logKeyValuePair("result", result);
+    }
+
     logger.logKeyValuePair("commit", commitDetails);
 
     return commitMessageOk;
@@ -72,6 +75,33 @@ if (!ok) {
 // --------------------- //
 // ----- FUNCTIONS ----- //
 // --------------------- //
+function validateCommitFormat(commitMsg, commitTypesAccepted) {
+  if (commitMsg.split(":").length >= 2) {
+    const validCommitType = commitTypesAccepted.some((prefix) =>
+      commitMsg.startsWith(`${prefix}`)
+    );
+
+    if (!validCommitType) {
+      return false
+    }
+
+    const scopeRegex = /(?<type>^[a-z]+)(?<scope>\([a-z,\-]+\))?(?<breaking>!)?(?<colon>:{1})/
+    let matchResult = commitMsg.match(scopeRegex);
+    if (!matchResult) {
+      return false
+    }
+
+    let { breaking } = matchResult.groups;
+    if (breaking == '!') {
+      logger.logWarning(`this commit is a breaking change`);
+    }
+
+    return true
+  }
+
+  return false;
+}
+
 function getDefaultConventionalCommits(filePath) {
   const rawdata = fs.readFileSync(filePath);
   const DefaultCCTypevsReleaseType = JSON.parse(rawdata);
