@@ -7,8 +7,22 @@ inputs:
   pr-branch:
     description: "name of the branch where the pull request comes from"
     required: true
+  custom-conventional-commits-file:
+    description: "json files with the custom conventional commit type vs release type associated"
+    required: false
+
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/ensure-conventional-commits.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+    - name: 'Validate Custom Conventional Commit File IF Provided'
+      run: |
+        file_path=${{ inputs.custom-conventional-commits-file }}
+        if test -f "$file_path"; then
+          node ${{ github.action_path }}/validate-custom-cc-types.js $file_path
+        fi
+      shell: bash
+    - name: 'Validate Commits Provided'
+      run: node ${{ github.action_path }}/ensure-conventional-commits.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }} ${{ inputs.custom-conventional-commits-file }}
+      env:
+        DEFAULT_CC: '${{ github.action_path }}/default-conventional-commits-accepted.json'
       shell: bash
