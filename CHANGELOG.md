@@ -1,3 +1,9 @@
+# :confetti_ball: 0.1.2 (2022-04-12T12:50:13.967Z)
+- - -
+## :newspaper: Others
+* feat(js):  LANZ-2248 Improved gh action to accept scope and breaking change (#5)
+- - -
+- - -
 # :confetti_ball: 0.1.1 (2022-04-12T10:40:08.023Z)
 - - -
 ## :bug: Fixes
