@@ -19,16 +19,19 @@ if (fs.existsSync(customCCFilePath)) {
     CCTypevsReleaseType.forEach(element => {
         logger.logAction("Validating Convention Commit Type:")
         if (!element.commitType) {
-            throw new Error(`ERROR: no release type defined for ${element.releaseType}`);
+            throw new Error(`ERROR: no commit type defined for ${element.releaseType}`);
         }
 
-        if (!element.releaseType && !AllowedReleaseType.includes(element.releaseType)) {
-            throw new Error(`ERROR:  ${element.releaseType} is invalid release type.`);
+        if (!element.releaseType) {
+            throw new Error(`ERROR: no release type defined for ${element.commitType}`);
         }
 
         logger.logKeyValuePair("commitType", element.commitType);
         logger.logKeyValuePair("releaseType", element.releaseType);
 
+        if (!AllowedReleaseType.includes(element.releaseType)) {
+            throw new Error(`ERROR:  ${element.releaseType} is a invalid release type. Please use: ${AllowedReleaseType}`);
+        }
     });
 
     logger.logSucceed("the conventional commits provided are valid!");
