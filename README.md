@@ -30,6 +30,63 @@ The action currently accepts the following prefixes:
 
 :warning: Attention! If you set your action to work with 3 numbers, these prefixes will update the PATCH number.
 
+# You want to use custom commit types ?
+
+1. Create a json file providing there the custom commit type and the release associated (`major,minor,patch`) as next:
+
+```json
+[
+    {
+        "commitType": "break",
+        "releaseType": "major"
+    },
+    {
+        "commitType": "feat",
+        "releaseType": "minor"
+    },
+    {
+        "commitType": "fix",
+        "releaseType": "minor"
+    }
+]
+```
+
+2. Provide its path in the parameter `custom-conventional-commits-file`
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  check-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ohpensource/ensure-conventional-commits-gh-action@main
+        name: Ensure conventional commits
+        with:
+          base-branch: $GITHUB_BASE_REF
+          pr-branch: $GITHUB_HEAD_REF
+          custom-conventional-commits-file: custom-conventional-commits.json
+```
+
+example fie: [custom-conventional-commits-accepted.json](custom-conventional-commits-accepted.json)
+
+# Test this in Windows using WSL Ubuntu
+
+```bash
+CUSTOM_CC_FILE="custom-conventional-commits-accepted.json";
+node validate-custom-cc-types.js $CUSTOM_CC_FILE ;
+
+GITHUB_BASE_REF="main";
+GITHUB_HEAD_REF="LANZ-2249";
+CUSTOM_CC_FILE="custom-conventional-commits-accepted.json";
+node ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF $CUSTOM_CC_FILE;
+```
+
 # License Summary
 
 This code is made available under the MIT license. Details [here](LICENSE).

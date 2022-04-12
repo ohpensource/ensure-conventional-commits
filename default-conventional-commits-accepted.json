@@ -1,0 +1,38 @@
+[
+    {
+        "commitType": "break",
+        "releaseType": "major"
+    },
+    {
+        "commitType": "feat",
+        "releaseType": "minor"
+    },
+    {
+        "commitType": "fix",
+        "releaseType": "patch"
+    },
+    {
+        "commitType": "build"
+    },
+    {
+        "commitType": "chore"
+    },
+    {
+        "commitType": "ci"
+    },
+    {
+        "commitType": "docs"
+    },
+    {
+        "commitType": "style"
+    },
+    {
+        "commitType": "refactor"
+    },
+    {
+        "commitType": "perf"
+    },
+    {
+        "commitType": "test"
+    }
+]
