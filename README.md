@@ -28,6 +28,10 @@ The action currently accepts the following prefixes:
 - **fix:** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
 - **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes. A commit message example could be "docs: improve readme with examples".
 
+## remarks
+
+:warning: commits that contain `[skip ci]` are skipped from the validation.
+
 # You want to use custom commit types ?
 
 1. Create a JSON file providing there the custom commit type and the release associated (`major,minor,patch`) as next:
