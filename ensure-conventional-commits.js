@@ -38,6 +38,7 @@ let ok = git
   .getCommitsInsidePullRequest(baseBranch, `origin/${prBranch}`)
   .every((commit) => {
     logger.logAction("EVALUATING COMMIT");
+
     let commitTypes = useCustomCC ? customCCTypes : defaultCCTypes
     let commitMessageOk = validateCommitFormat(commit.subject, commitTypes)
     let result = {
@@ -47,6 +48,8 @@ let ok = git
       examples: [
         "feat: awesome new feature",
         "break: removing GET /ping endpoint",
+        "feat (app1): awesome new feature in the app1",
+        "[skip ci] doing some ci magic"
       ],
     };
 
@@ -76,6 +79,12 @@ if (!ok) {
 // ----- FUNCTIONS ----- //
 // --------------------- //
 function validateCommitFormat(commitMsg, commitTypesAccepted) {
+
+  if (commitMsg.includes('[skip ci]')) {
+    logger.logWarning(`skipping commit validation because contains [skip ci]. commit message:${commitMsg}`)
+    return true
+  }
+
   if (commitMsg.split(":").length >= 2) {
     const validCommitType = commitTypesAccepted.some((prefix) =>
       commitMsg.startsWith(`${prefix}`)
