@@ -85,7 +85,7 @@ node validate-custom-cc-types.js $CUSTOM_CC_FILE ;
 
 export GITHUB_BASE_REF="main";
 export GITHUB_HEAD_REF="LANZ-2248";
-export CUSTOM_CC="custom-conventional-commits-accepted.json";
+export CUSTOM_CC="";
 export DEFAULT_CC="default-conventional-commits-accepted.json";
 node ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF $CUSTOM_CC;
 ```

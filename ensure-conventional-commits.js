@@ -79,36 +79,30 @@ if (!ok) {
 // ----- FUNCTIONS ----- //
 // --------------------- //
 function validateCommitFormat(commitMsg, commitTypesAccepted) {
-
   if (commitMsg.includes('[skip ci]')) {
-    logger.logWarning(`skipping commit validation because contains [skip ci].`)
-    return true
+    logger.logWarning('skipping commit validation because contains [skip ci].');
+    return true;
   }
 
-  if (commitMsg.split(":").length >= 2) {
-    const validCommitType = commitTypesAccepted.some((prefix) =>
-      commitMsg.startsWith(`${prefix}`)
-    );
+  // release notes
+  const convRegex = /(?<type>^[a-z]+)(?<scope>\([a-z\d,\-]+\))?(?<breaking>!)?(?<colon>:{1})(?<space> {1})(?<subject>.*)/;
+  const matchResult = commitMsg.match(convRegex);
 
-    if (!validCommitType) {
-      return false
-    }
-
-    const scopeRegex = /(?<type>^[a-z]+)(?<scope>\([a-z,\-]+\))?(?<breaking>!)?(?<colon>:{1})/
-    let matchResult = commitMsg.match(scopeRegex);
-    if (!matchResult) {
-      return false
-    }
-
-    let { breaking } = matchResult.groups;
-    if (breaking == '!') {
-      logger.logWarning(`this commit is a breaking change`);
-    }
-
-    return true
+  if (!matchResult) {
+    return false;
   }
 
-  return false;
+  let { breaking, type } = matchResult.groups;
+  const validCommitType = commitTypesAccepted.includes(type);
+  if (!validCommitType) {
+    return false;
+  }
+
+  if (breaking || type === 'break') {
+    logger.logWarning(`this commit is a breaking change`);
+  }
+
+  return true;
 }
 
 function getDefaultConventionalCommits(filePath) {
