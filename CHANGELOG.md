@@ -1,3 +1,9 @@
+# :confetti_ball: 0.1.4 (2022-05-03T08:58:46.498Z)
+- - -
+## :bug: Fixes
+* LANZ-2495 fixed commid validation for message that have the pattern: valid type + antyhing + :  . Included Regex for validation (#10)
+- - -
+- - -
 # :confetti_ball: 0.1.3 (2022-04-21T11:36:15.339Z)
 - - -
 ## :bug: Fixes
