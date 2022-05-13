@@ -30,7 +30,8 @@ The action currently accepts the following prefixes:
 
 ## remarks
 
-:warning: commits that contain `[skip ci]` are skipped from the validation.
+* :warning: commits that contain `[skip ci]` are skipped from the validation.
+* :warning: for the `actions/checkout@v2` the `fetch-depth: 0` parameter is **MANDATORY**
 
 # You want to use custom commit types ?
 
