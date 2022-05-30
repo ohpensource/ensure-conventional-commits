@@ -3,25 +3,27 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DEFAULT_CC: "default-conventional-commits-accepted.json"
-  CUSTOM_CC: "custom-conventional-commits-accepted.json"
-
 jobs:
-  conventional-commits:
+  test-custom-conventional-commits:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: 'Validate Custom Conventional Commit File IF Provided'
-        run: |
-          if test -f "$CUSTOM_CC"; then
-              node ./validate-custom-cc-types.js $CUSTOM_CC
-          fi
-      - name: Test Main Script
-        run: |
-          node ./ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF $CUSTOM_CC
+      - name: 'Validate Conventional Commits'
+        uses: ./
+        with:
+          custom-conventional-commits-file: "./assets/custom-conventional-commits-accepted.json"
+  test-default-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: 'Validate Conventional Commits'
+        uses: ./
+        with:
+          custom-conventional-commits-file: ""
   jira-tickets-commits:
     runs-on: ubuntu-latest
     steps:

@@ -14,11 +14,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: ohpensource/ensure-conventional-commits-gh-action@main
+      - uses: ohpensource/ensure-conventional-commits-gh-action@v0.1.5
         name: Ensure conventional commits
-        with:
-          base-branch: $GITHUB_BASE_REF
-          pr-branch: $GITHUB_HEAD_REF
 ```
 
 The action currently accepts the following prefixes:
@@ -71,25 +68,101 @@ jobs:
       - uses: ohpensource/ensure-conventional-commits-gh-action@main
         name: Ensure conventional commits
         with:
-          base-branch: $GITHUB_BASE_REF
-          pr-branch: $GITHUB_HEAD_REF
           custom-conventional-commits-file: custom-conventional-commits.json
 ```
 
 example fie: [custom-conventional-commits-accepted.json](custom-conventional-commits-accepted.json)
 
-# Test this in Windows using WSL Ubuntu
+# Do you want to validate commit scopes?
+
+Simply provide them as a coma-separated list in the GH action:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  check-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ohpensource/ensure-conventional-commits-gh-action@v0.1.5
+        name: Ensure conventional commits
+        with:
+          scopes: "app1,app2"
+```
+
+examples:
+
+| Commit Message                                   | Pass                                   |
+| ------------------------------------------------ | -------------------------------------- |
+| fix(app1): fixed error in the API                | ✅                                      |
+| feat(app2): added new feature for authentication | ✅                                      |
+| major(app3): updated endpoints paths             | ❌  app3 not provided in the scope list |
+
+# Do you want to make sure files modified match the commit scopes?
+
+Let's say you have the next file structure:
 
 ```bash
-CUSTOM_CC_FILE="custom-conventional-commits-accepted.json";
-node validate-custom-cc-types.js $CUSTOM_CC_FILE ;
-
-export GITHUB_BASE_REF="main";
-export GITHUB_HEAD_REF="LANZ-2248";
-export CUSTOM_CC="";
-export DEFAULT_CC="default-conventional-commits-accepted.json";
-node ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF $CUSTOM_CC;
+├── CHANGELOG.md
+├── README.md
+├── apps-changed.json
+├── src
+│   ├── app1
+│   │   ├── CHANGELOG.md
+│   │   └── version.json
+│   ├── app2
+│   │   ├── CHANGELOG.md
+│   │   └── version.json
+│   └── app3
+│       ├── CHANGELOG.md
+│       └── version.json
+└── version.json
 ```
+Where you have apps under the `src` folder. Then, you want to make sure all commits refer to the app modified through the scope. Next are some examples:
+
+* fix(app1): fixed error in the API                   -> must contain files modified under the app1/
+* feat(app2): added new feature for authentication    -> must contain files modified under the app2/
+* major(app3): updated endpoints paths                -> must contain files modified under the app3/
+
+## remarks
+:warning: In case a commit doesn't have a scope, only the commit type and format will be validated
+
+Then you can validate the commits by setting the GH action as next:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  check-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ohpensource/ensure-conventional-commits-gh-action@v0.1.5
+        name: Ensure conventional commits
+        with:
+          scopes: "app1,app2"
+          validate-scopes-against-apps: true
+          apps-folder: "src/"
+```
+Notes, in case the apps are listed in the root directory, the `app-folder` doesn't have to be provided.
+
+examples:
+
+| Commit Message                                   | filles modified              | Pass                                          |
+| ------------------------------------------------ | ---------------------------- | --------------------------------------------- |
+| fix(app1): fixed error in the API                | include files in app1/       | ✅                                             |
+| fix(app1): fixed error in app2                   | only includes files in app2/ | ❌ because it must include files in app1       |
+| feat(app2): added new feature for authentication | include files in app2/       | ✅                                             |
+| major(app3): updated endpoints paths             | include files in app3/       | ❌ because app3 not provided in the scope list |
 
 # License Summary
 
