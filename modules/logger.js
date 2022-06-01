@@ -1,3 +1,4 @@
+const CONSTANTS = require("./constants.js");
 // docs for colours:
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 
@@ -36,11 +37,36 @@ const logError = (msg) => {
   console.log(`${fontRed}${msg}${resetColour}`);
 };
 
+const logErrorParameter = (key, value) => {
+  const fontRed = "\x1b[31m"
+  const resetColour = "\x1b[0m"
+  console.log(`${fontRed}${key}: ${JSON.stringify(value, null, 4)}${resetColour}`);
+};
+
+const logValidationError = (commit, reason, expectedValues) => {
+  const error_details = {
+    reason,
+    expectedValues,
+    documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
+    examples: CONSTANTS.COMMIT_EXAMPLES,
+    commitDetails: {
+      shortHash: commit.shortHash,
+      subject: commit.subject,
+      author: commit.author
+    }
+  };
+
+  logError(`commit does not follow conventions. ${reason}`)
+  logErrorParameter("error_details", error_details);
+}
+
 module.exports = {
+  logWarning,
+  logTitle,
   logAction,
   logKeyValuePair,
   logSucceed,
   logError,
-  logWarning,
-  logTitle
+  logErrorParameter,
+  logValidationError
 };

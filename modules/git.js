@@ -16,14 +16,16 @@ const prettyFormat = [
   "",
 ];
 
-const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
-  let mergeBaseCommit = child
-    .execSync(`git merge-base origin/${destinationBranchName} ${branchName}`)
-    .toString("utf-8")
-    .split("\n")[0];
+const getMergeBaseCommit = (targetBranch, sourceBranch) => child
+  .execSync(`git merge-base origin/${targetBranch} ${sourceBranch}`)
+  .toString("utf-8")
+  .split("\n")[0]
+
+const getCommitsInsidePullRequest = (targetBranch, sourceBranch) => {
+  let mergeBaseCommit = getMergeBaseCommit(targetBranch, sourceBranch);
   let commits = child
     .execSync(
-      `git log ${mergeBaseCommit}..${branchName} --no-merges --pretty=format:"${prettyFormat.join(
+      `git log ${mergeBaseCommit}..${sourceBranch} --no-merges --pretty=format:"${prettyFormat.join(
         splitText
       )}"`
     )
@@ -33,17 +35,13 @@ const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
 
   return commits;
 };
-const getLastCommit = () => {
-  let commit = child
-    .execSync(
-      `git log HEAD^1..HEAD --pretty=format:"${prettyFormat.join(splitText)}"`
-    )
-    .toString("utf-8")
-    .split(`${splitText}\n`)
-    .map((commitInfoText) => getCommitInfo(commitInfoText))[0];
 
-  return commit;
-};
+const getFilesModifiedInACommit = (commitHash) => child
+  .execSync(`git diff-tree --no-commit-id --name-only -r ${commitHash}`)
+  .toString("utf-8")
+  .split("\n")
+  .filter(line => line.length > 0)
+
 const getCommitInfo = (commitToParse) => {
   let commitInfoAsArray = commitToParse.split(`${splitText}`);
   var branchAndTags = commitInfoAsArray[commitInfoAsArray.length - 1]
@@ -76,5 +74,5 @@ const getCommitInfo = (commitToParse) => {
 
 module.exports = {
   getCommitsInsidePullRequest,
-  getLastCommit,
+  getFilesModifiedInACommit
 };

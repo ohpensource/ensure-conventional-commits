@@ -1,4 +1,4 @@
-const logger = require("./logging.js");
+const logger = require("./logger.js");
 const fs = require('fs');
 
 logger.logTitle("VALIDATING CUSTOM CONVENTIONAL COMMITS TYPE");
@@ -9,7 +9,7 @@ const AllowedReleaseType = [
     "patch"
 ];
 
-const customCCFilePath = process.argv[2];
+const customCCFilePath = process.env.CUSTOM_CONVENTIONAL_COMMITS_FILE;
 logger.logKeyValuePair("custom-conventional-commits-file", customCCFilePath);
 
 if (fs.existsSync(customCCFilePath)) {
