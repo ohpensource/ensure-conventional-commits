@@ -1,0 +1,6 @@
+{
+  "scopeValidation": {
+    "scopesSource": "subfolder",
+    "scopesSubfolder": "parse-settings/src/"
+  }
+}

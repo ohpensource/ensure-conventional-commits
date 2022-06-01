@@ -1,0 +1,44 @@
+{
+  "commitTypes": {
+    "noRelease": ["refactor","docs", "ci","test"],
+    "fixes": ["fix","patch"],
+    "newFeatures": ["feat"],
+    "breakingChanges": ["break","major"]
+  },
+  "scopeValidation": {
+    "scopesSource":"list",
+    "scopesList": {
+      "conf-api-dev": {
+        "folderPattern": "configuration/api/dev"
+      },
+      "conf-api-tst": {
+        "folderPattern": "configuration/api/tst"
+      },
+      "conf-api-acc": {
+        "folderPattern": "configuration/api/acc"
+      },
+      "conf-api-prd": {
+        "folderPattern": "configuration/api/prd"
+      },
+      "conf-sec-dev": {
+        "folderPattern": "configuration/security/dev"
+      },
+      "conf-sec-tst": {
+        "folderPattern": "configuration/security/tst"
+      },
+      "conf-sec-acc": {
+        "folderPattern": "configuration/security/acc"
+      },
+      "conf-sec-prd": {
+        "folderPattern": "configuration/security/prd"
+      },
+      "api": {
+        "folderPattern": "terraform/api"
+      },
+      "sec": {
+        "folderPattern": "terraform/security"
+      }
+    },
+    "scopesSubfolder":"src/"
+  }
+}

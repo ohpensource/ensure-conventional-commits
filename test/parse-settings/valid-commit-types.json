@@ -1,0 +1,8 @@
+{
+  "commitTypes": {
+    "noRelease": ["docs"],
+    "fixes": ["fix"],
+    "newFeatures": ["feat"],
+    "breakingChanges": ["break"]
+  }
+}

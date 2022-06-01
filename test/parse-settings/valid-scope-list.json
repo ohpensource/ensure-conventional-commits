@@ -1,0 +1,15 @@
+{
+  "scopeValidation": {
+    "scopesSource": "list",
+    "scopesList": [
+      {
+        "name": "scope1",
+        "folderPattern": "folder/scope1"
+      },
+      {
+        "name": "scope2",
+        "folderPattern": "folder/scope2"
+      }
+    ]
+  }
+}

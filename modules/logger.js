@@ -43,21 +43,25 @@ const logErrorParameter = (key, value) => {
   console.log(`${fontRed}${key}: ${JSON.stringify(value, null, 4)}${resetColour}`);
 };
 
-const logValidationError = (commit, reason, expectedValues) => {
+const logValidationError = (commitMsg, reason, expectedValues) => {
   const error_details = {
     reason,
     expectedValues,
     documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
-    examples: CONSTANTS.COMMIT_EXAMPLES,
-    commitDetails: {
-      shortHash: commit.shortHash,
-      subject: commit.subject,
-      author: commit.author
-    }
+    examples: CONSTANTS.COMMIT_MSG_EXAMPLES,
+    commitMsg: commitMsg
   };
 
   logError(`commit does not follow conventions. ${reason}`)
   logErrorParameter("error_details", error_details);
+}
+
+const logSettingsError = (field, reason, expectedValues) => {
+  logError(`Error validating ${field}.`)
+  logErrorParameter("reason", reason);
+  if (expectedValues) {
+    logErrorParameter("expectedValues", expectedValues);
+  }
 }
 
 module.exports = {
@@ -68,5 +72,6 @@ module.exports = {
   logSucceed,
   logError,
   logErrorParameter,
-  logValidationError
+  logValidationError,
+  logSettingsError
 };

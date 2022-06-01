@@ -1,37 +1,23 @@
 name: "ensure-conventional-commits"
 description: "checks that the commits in a pull request follow conventional commits"
 inputs:
-  custom-conventional-commits-file:
-    description: "json files with the custom conventional commit type vs release type associated"
-    required: false
-  scopes:
-    description: "scopes"
-    required: false
-  validate-scopes-against-apps:
-    description: "boolean to verify scopes provided match apps listed in the apps-folder (next parameter)"
-    default: "false"
-    required: false
-  apps-folder:
-    description: "folder that contains apps. Provide it as next: folder/ Example: src/"
-    default: ""
+  settings-file:
+    description: "json files with the settings for custom conventional commit type and scopes"
     required: false
 
 runs:
   using: "composite"
   steps:
     - name: 'Validate Custom Conventional Commit File'
-      if: ${{ hashFiles(inputs.custom-conventional-commits-file) != '' }}
+      if: ${{ hashFiles(inputs.settings-file) != '' }}
       env:
-        CUSTOM_CONVENTIONAL_COMMITS_FILE: ${{ inputs.custom-conventional-commits-file }}
+        SETTINGS_FILE: ${{ inputs.settings-file }}
       run: |
-        node ${{ github.action_path }}/modules/validate-custom-cc-types.js
+        node ${{ github.action_path }}/validate-settings-gh-action.js
       shell: bash
     - name: 'Validate Commits Provided'
       env:
-        CUSTOM_CONVENTIONAL_COMMITS_FILE: ${{ inputs.custom-conventional-commits-file }}
-        SCOPES: ${{ inputs.scopes }}
-        VALIDATE_SCOPES_AGAINST_APPS: ${{ inputs.validate-scopes-against-apps }}
-        APPS_FOLDER: ${{ inputs.apps-folder }}
+        SETTINGS_FILE: ${{ inputs.settings-file }}
       run: |
         node ${{ github.action_path }}/main.js
       shell: bash

@@ -1,0 +1,6 @@
+# require: '@babel/register'
+ui: bdd
+timeout: 5000
+color: true
+bail: true
+check-leaks: true
