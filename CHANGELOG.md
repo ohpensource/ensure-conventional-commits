@@ -1,3 +1,9 @@
+# :confetti_ball: 1.0.0 (2022-06-01T08:16:08.888Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2678 refactor gh action. reestructure files into javascript solution. reduced number of inpur parameters (#11)
+- - -
+- - -
 # :confetti_ball: 0.1.5 (2022-05-11T09:27:43.143Z)
 - - -
 ## :newspaper: Others
