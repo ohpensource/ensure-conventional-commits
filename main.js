@@ -7,6 +7,7 @@ const commitParser = require("./modules/commit-parser.js");
 logger.logTitle("ENSURING CONVENTIONAL COMMITS");
 
 const settings = settingsProvider.getSettings()
+logger.logKeyValuePair('settings', settings)
 
 let parsedCommits = git
   .getCommitsInsidePullRequest(settings.targetBranch, `origin/${settings.sourceBranch}`)
@@ -27,9 +28,8 @@ const invalidCommits = parsedCommits.filter(x => x.canBeParse &&
 
 invalidCommits.forEach(x => logger.logError(`error validating the commit: ${x.subject}`))
 
-const commitsAreInvalid = wronglyParsedCommits.length > 0 || invalidCommits.length > 0
+const commitsAreValid = wronglyParsedCommits.length === 0 && invalidCommits.length === 0
 
-if (commitsAreInvalid) {
-  logger.logKeyValuePair('settings', settings)
-  process.exit(1)
-}
+if (commitsAreValid) { logger.logSucceed("commits are valid") }
+
+process.exit(commitsAreValid ? 0 : 1)
