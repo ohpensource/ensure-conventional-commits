@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.0 (2022-06-07T15:30:13.100Z)
+- - -
+## :hammer: Features
+* LANZ-2689 change input parameters to be provided in a json file. (#13)
+- - -
+- - -
 # :confetti_ball: 1.0.0 (2022-06-01T08:16:08.888Z)
 - - -
 ## :boom: BREAKING CHANGES
