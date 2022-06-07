@@ -4,7 +4,7 @@ on:
     branches: [main]
 
 jobs:
-  test-custom-conventional-commits:
+  conventional-commits:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,17 +13,7 @@ jobs:
       - name: 'Validate Conventional Commits'
         uses: ./
         with:
-          custom-conventional-commits-file: "./assets/custom-conventional-commits-accepted.json"
-  test-default-conventional-commits:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: 'Validate Conventional Commits'
-        uses: ./
-        with:
-          custom-conventional-commits-file: ""
+          settings-file: cicd/settings.json
   jira-tickets-commits:
     runs-on: ubuntu-latest
     steps:
@@ -51,4 +41,4 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('Include documentation in the README.md file!')
+            core.setFailed('Include documentation in the README.md file!')

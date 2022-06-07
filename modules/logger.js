@@ -43,17 +43,12 @@ const logErrorParameter = (key, value) => {
   console.log(`${fontRed}${key}: ${JSON.stringify(value, null, 4)}${resetColour}`);
 };
 
-const logValidationError = (commit, reason, expectedValues) => {
+const logValidationError = (reason, expectedValues) => {
   const error_details = {
     reason,
     expectedValues,
     documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
-    examples: CONSTANTS.COMMIT_EXAMPLES,
-    commitDetails: {
-      shortHash: commit.shortHash,
-      subject: commit.subject,
-      author: commit.author
-    }
+    examples: CONSTANTS.COMMIT_MSG_EXAMPLES
   };
 
   logError(`commit does not follow conventions. ${reason}`)
