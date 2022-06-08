@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.1 (2022-06-08T08:38:22.074Z)
+- - -
+## :newspaper: Others
+* refactor: LANZ-2702 simplify javascript code (#14)
+- - -
+- - -
 # :confetti_ball: 1.1.0 (2022-06-07T15:30:13.100Z)
 - - -
 ## :hammer: Features
