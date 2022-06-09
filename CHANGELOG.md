@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.4 (2022-06-09T11:35:57.187Z)
+- - -
+## :bug: Fixes
+* OFF-241 solved error when not providing settings-file (#18)
+- - -
+- - -
 # :confetti_ball: 1.1.3 (2022-06-09T08:32:12.618Z)
 - - -
 ## :newspaper: Others
