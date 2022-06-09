@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.3 (2022-06-09T08:32:12.618Z)
+- - -
+## :newspaper: Others
+* docs: OFF-241 updated readme (#17)
+- - -
+- - -
 # :confetti_ball: 1.1.2 (2022-06-09T08:24:29.934Z)
 - - -
 ## :bug: Fixes
