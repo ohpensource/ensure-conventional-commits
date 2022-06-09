@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.2 (2022-06-09T08:24:29.934Z)
+- - -
+## :bug: Fixes
+* OFF-241 typo in Error class breaks the action (#16)
+- - -
+- - -
 # :confetti_ball: 1.1.1 (2022-06-08T08:38:22.074Z)
 - - -
 ## :newspaper: Others
