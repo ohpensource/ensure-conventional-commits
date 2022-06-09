@@ -20,7 +20,7 @@ jobs:
           settings-file: cicd/settings.json
 ```
 
-The main parameter is the `settings-file`. This is the path to a JSON file where you can provide the next settings:
+The main parameter is the `settings-file`, it is OPTIONAL and it is the path to a JSON file where you can provide the next settings:
 
 * Custom conventional commits settings (key: `conventionalCommits`).
   * List of prefixes that commits must start with. Examples: `break,feat,fix`
