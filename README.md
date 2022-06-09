@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: ohpensource/ensure-conventional-commits-gh-action@v1.1.0
+      - uses: ohpensource/ensure-conventional-commits-gh-action@v1.1.2
         name: Ensure conventional commits
         with:
           settings-file: cicd/settings.json
