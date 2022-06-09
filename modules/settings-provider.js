@@ -7,7 +7,7 @@ getSettings = () => {
     const settingsFile = process.env.SETTINGS_FILE
 
     if (!fs.existsSync(settingsFile)) {
-        throw new error('file provided does not exists')
+        throw new Error('file provided does not exists')
     }
 
     const rawData = fs.readFileSync(settingsFile)
