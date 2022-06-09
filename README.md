@@ -89,7 +89,6 @@ If you don't provide a `settings-file` or you don't define any conventional comm
 * :warning: commits that contain `[skip ci]` are skipped from the validation.
 * :warning: for the `actions/checkout@v2` the `fetch-depth: 0` parameter is **MANDATORY**
 
-
 # License Summary
 
 This code is made available under the MIT license. Details [here](LICENSE).
