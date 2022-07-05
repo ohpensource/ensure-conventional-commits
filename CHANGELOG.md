@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.5 (2022-07-05T14:14:22.777Z)
+- - -
+## :bug: Fixes
+* LANZ-2865 improve logging. Now every commit will be output (#19)
+- - -
+- - -
 # :confetti_ball: 1.1.4 (2022-06-09T11:35:57.187Z)
 - - -
 ## :bug: Fixes
