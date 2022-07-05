@@ -5,6 +5,9 @@ const foldersContainFile = (file, folders) => folders.some(folder => file.starts
 
 validateCommit = (commit, settings) => {
 
+    logger.logAction(`validating commit:`)
+    logger.logKeyValuePair(`commit`, commit)
+
     let commitTypeOk = commit.type in settings.acceptedPrefixes
     if (!commitTypeOk) {
         logger.logValidationError(`commit prefix ${commit.type} is not valid.`, settings.acceptedPrefixes)
