@@ -1,3 +1,9 @@
+# :confetti_ball: 1.1.6 (2022-11-16T11:44:10.297Z)
+- - -
+## :bug: Fixes
+* LANZ-3405 fixed commit regex to accept underscore in the scopes (#20)
+- - -
+- - -
 # :confetti_ball: 1.1.5 (2022-07-05T14:14:22.777Z)
 - - -
 ## :bug: Fixes
