@@ -24,9 +24,11 @@ The main parameter is the `settings-file`, it is OPTIONAL and it is the path to 
 
 * Custom conventional commits settings (key: `conventionalCommits`).
   * List of prefixes that commits must start with. Examples: `break,feat,fix`
+  * A prefix must contain only letters and numbers.
   * For every prefix, the release type based on the semantic versioner must be provided. Valid values are: `major,minor,patch,none`. key: `release`
 * Scopes list (key: `scopes`):
-  * Scopes provided in the commits will be validated against the list provided. 
+  * Scopes provided in the commits will be validated against the list provided.
+  * Scope keys must only contain letters, numbers, dashes and underscores.
   * Folder patterns for every scope to ensure commits modify the right files. key: `folderPattern`
 
 Here is an example of a `settings-file`:
